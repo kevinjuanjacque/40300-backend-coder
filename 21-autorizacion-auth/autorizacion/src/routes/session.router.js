@@ -7,7 +7,7 @@ const router = Router();
 
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
-  const user = await UsersModel.findOne({ email, password });
+  const user = await UsersModel.findOne({ email, });
   if (user) {
     const token = generateToken(user);
     res.send({ ...user, token });

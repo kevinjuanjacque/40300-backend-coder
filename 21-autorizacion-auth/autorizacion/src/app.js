@@ -9,7 +9,7 @@ const passport = require('passport');
 const inicialize = require('./utils/passport.config');
 
 mongoose.connect(
-  'mongodb+srv://admin:DUeqEG4AE0ha7Nf6@cluster0.vucevye.mongodb.net/?retryWrites=true&w=majority',
+  'mongodb+srv://Ignacio:jY6DHRTn6F9uCAmF@admin.mtszt8r.mongodb.net/?retryWrites=true&w=majority',
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -22,7 +22,7 @@ app.use(
   session({
     store: MongoConnect.create({
       mongoUrl:
-        'mongodb+srv://admin:DUeqEG4AE0ha7Nf6@cluster0.vucevye.mongodb.net/?retryWrites=true&w=majority',
+      'mongodb+srv://Ignacio:jY6DHRTn6F9uCAmF@admin.mtszt8r.mongodb.net/?retryWrites=true&w=majority',
       mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
     }),
     secret: 'DASDSADSADVFGDDFBGFDBDGB',
