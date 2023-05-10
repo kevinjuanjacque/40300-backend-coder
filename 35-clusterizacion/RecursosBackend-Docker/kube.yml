@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubeservice
+spec:
+  selector:
+    app: kubedev
+  ports:
+    - port: 80
+      targetPort: 8080
+  type: LoadBalancer
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubedev
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: kubedev
+  template:
+    metadata:
+      labels:
+        app: kubedev
+    spec:
+      containers:
+        - name: kubedev
+          image: kevinkaponi/imagencoder:1.0.0
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MONGO_URL
+              value: mongodb+srv://admin:DUeqEG4AE0ha7Nf6@cluster0.vucevye.mongodb.net/?retryWrites=true&w=majority
+          imagePullPolicy: Always
