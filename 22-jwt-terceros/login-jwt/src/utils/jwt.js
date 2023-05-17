@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
 const PRIVATE_KEY = 'DJASHDJASKNJKVFSJKVBFJSKJKNJVJFDBVD';
 
-const generateToken = (payload) => {
-  const token = jwt.sign({ payload }, PRIVATE_KEY, { expiresIn: '3m' });
+const generateToken = ({email}) => {
+  const token = jwt.sign({ email }, PRIVATE_KEY, { expiresIn: '1h' });
   return token;
 };
 

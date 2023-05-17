@@ -41,6 +41,8 @@ router.post(
       }
 
       const product = req.body;
+      //""  || true=true; select * from users;
+      //sql ="SELECT * FROM users where email = ""  || true=true && password = //""  || true=true; select * from users;"
       const newProduct = await ProductsModel.create(product);
       return res.json({
         msg: 'ok',
