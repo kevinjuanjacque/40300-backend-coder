@@ -1,45 +1,33 @@
-import { Injectable } from '@nestjs/common'
-import { CreateUserDto } from './dto/create-user.dto'
-import { UpdateUserDto } from './dto/update-user.dto'
-import { User } from './entities/user.entity'
+import { Injectable } from '@nestjs/common';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { User, UserDocument } from './models/users.model';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class UsersService {
-  user: Array<User>
-
-  constructor() {
-    this.user = []
-  }
+  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   create(createUserDto: CreateUserDto) {
-    return this.user.push({ id: this.user.length, ...createUserDto })
+    return this.userModel.create(createUserDto);
   }
 
-  findAll(limit: number): Array<User> {
-    const clonUser = [...this.user]
-    return clonUser.splice(0, limit)
+  findAll(limit: number) {
+    return this.userModel.find().limit(limit).exec();
   }
 
-  findOne(id: number) {
-    return this.user[id]
+  findOne(id: string) {
+    return this.userModel.findById(id).exec();
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    console.log({ ...this.user[id] })
+  update(id: string, updateUserDto: UpdateUserDto) {
+    console.log(updateUserDto);
 
-    const newUser = {
-      id: this.user[id].id,
-      first_name: updateUserDto.first_name || this.user[id].first_name,
-      last_name: updateUserDto.last_name || this.user[id].last_name,
-      email: updateUserDto.email || this.user[id].email,
-      password: updateUserDto.password || this.user[id].password,
-    }
-    this.user[id] = newUser
-    console.log(this.user)
-    return 'user updated'
+    return this.userModel.findByIdAndUpdate(id, updateUserDto);
   }
 
-  remove(id: number) {
-    return this.user.splice(id, 1)
+  remove(id: string) {
+    return this.userModel.findByIdAndDelete(id);
   }
 }
